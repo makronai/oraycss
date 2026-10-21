@@ -1,0 +1,23 @@
+/* OrayCSS Default Root Design Tokens */
+:root {
+  --oray-background: #09090b;
+  --oray-foreground: #fafafa;
+  --oray-surface: #121215;
+  --oray-surface-elevated: #18181b;
+  --oray-primary: #b8f36b;
+  --oray-primary-foreground: #09090b;
+  --oray-secondary: #27272a;
+  --oray-secondary-foreground: #fafafa;
+  --oray-accent: #a78bfa;
+  --oray-accent-foreground: #09090b;
+  --oray-muted: #52525b;
+  --oray-muted-foreground: #a1a1aa;
+  --oray-border: #27272a;
+  --oray-input: #27272a;
+  --oray-ring: #b8f36b;
+  --oray-success: #22c55e;
+  --oray-warning: #f59e0b;
+  --oray-danger: #ef4444;
+  --oray-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --oray-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}

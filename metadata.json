@@ -1,0 +1,6 @@
+{
+  "name": "OrayCSS - Zero-Dependency Utility-First CSS Framework",
+  "description": "A production-grade, zero-dependency utility-first CSS framework and ahead-of-time compiler competing with Tailwind CSS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

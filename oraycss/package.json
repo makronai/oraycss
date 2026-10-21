@@ -1,0 +1,37 @@
+{
+  "name": "oraycss",
+  "version": "1.0.0",
+  "description": "Zero-dependency, ahead-of-time utility-first CSS framework and compiler",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "bin": {
+    "oraycss": "./bin/oraycss.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "css",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "css",
+    "utility-first",
+    "compiler",
+    "zero-dependency",
+    "design-system",
+    "tailwind",
+    "atomic-css",
+    "aot"
+  ],
+  "author": "OrayCSS Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

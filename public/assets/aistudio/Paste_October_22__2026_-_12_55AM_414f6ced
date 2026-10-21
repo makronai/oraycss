@@ -1,0 +1,1647 @@
+# MASTER BUILD PROMPT: ORAYCSS
+## Build a Zero-Dependency, Utility-First CSS Framework That Competes with Tailwind CSS
+
+You are a principal CSS framework architect, JavaScript compiler engineer, design systems expert, browser-platform specialist, developer tooling engineer, accessibility specialist, and product designer.
+
+Your mission is to **design, build, test, document, and prepare OrayCSS for release as a real, production-minded, zero-dependency utility-first CSS framework**.
+
+OrayCSS must compete with Tailwind CSS in developer experience, flexibility, expressive power, performance, responsive styling, and ecosystem potential, while establishing its own distinct visual philosophy.
+
+Do not merely write a proposal, create a landing page, generate a list of CSS classes, or build a decorative demo. Implement the actual compiler, utility engine, CLI, theme system, documentation, examples, and tests inside the available repository.
+
+Inspect the existing project first. Preserve useful work. Make sensible decisions independently, implement the highest-value complete solution first, run the available tests, fix defects, and report the actual results.
+
+When a feature is too ambitious for the initial implementation, establish a stable foundation, implement a useful subset, document the limitations, and never pretend incomplete functionality works.
+
+---
+
+# 1. Product Identity and Vision
+
+**Project:** OrayCSS  
+**Category:** Utility-first CSS framework and CSS generation toolchain  
+**Primary language:** Modern JavaScript  
+**Styling language:** CSS  
+**Package name target:** `oraycss`, subject to availability and naming-conflict checks  
+**CLI command:** `oraycss`  
+**Primary execution environment:** Node.js for compilation; modern browsers for the resulting CSS  
+**Dependency policy:** Zero mandatory third-party dependencies; target zero external npm dependencies altogether  
+**Primary interface:** HTML classes plus a standalone CLI  
+**Compatibility goal:** Usable alongside vanilla HTML, JavaScript, TypeScript, React, Vue, Svelte, Astro, and other tools that output HTML or contain recognizable class attributes.
+
+The central vision is:
+
+> OrayCSS transforms utility-first styling into a precise visual design instrument. It combines the speed of atomic CSS, the expressive power of modern CSS, the consistency of a thoughtful design system, and the elegance of premium digital product design—all without requiring a JavaScript UI framework, browser runtime, external service, or third-party runtime dependency.
+
+OrayCSS should make excellent design easier to achieve without forcing every website into the same aesthetic.
+
+It should support everything from clean SaaS dashboards and editorial websites to immersive portfolios, futuristic interfaces, sophisticated commerce experiences, minimalist applications, and polished product landing pages.
+
+## Four product pillars
+
+### Pillar A — Effortless utility
+
+Developers should write expressive classes directly in markup and compile only the required styles.
+
+### Pillar B — Premium design foundations
+
+Typography, spacing, visual hierarchy, shadows, borders, surfaces, gradients, motion, and design tokens should work together as a cohesive system.
+
+### Pillar C — Standalone performance
+
+The framework should generate ordinary CSS ahead of time. The finished website must not need OrayCSS JavaScript running in the browser.
+
+### Pillar D — Freedom and accessibility
+
+OrayCSS should work with plain HTML, existing CSS, established JavaScript frameworks, custom design systems, keyboard navigation, and reduced-motion preferences.
+
+---
+
+# 2. Define the Product Correctly
+
+OrayCSS is primarily a **CSS utility framework and compiler**, not a component framework.
+
+Its fundamental workflow should resemble this:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/oray.css" />
+    <title>OrayCSS Example</title>
+  </head>
+  <body class="bg-background text-foreground antialiased">
+    <main class="mx-auto w-full max-w-6xl px-6 py-20">
+      <section class="max-w-3xl space-y-6">
+        <span
+          class="inline-flex items-center rounded-full border border-border px-3 py-1 text-sm text-muted-foreground"
+        >
+          Introduce your product
+        </span>
+
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-6xl">
+          Powerful ideas.
+          <span class="text-accent">Beautifully simple.</span>
+        </h1>
+
+        <p class="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+          Build thoughtful digital experiences with expressive utilities,
+          consistent design tokens, and modern CSS.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a
+            href="#features"
+            class="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 font-medium text-primary-foreground transition duration-200 hover:-translate-y-0.5 hover:shadow-soft focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          >
+            Explore OrayCSS
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+```
+
+The classes in this example are illustrative. Ensure every class advertised as supported maps to a real generated CSS rule.
+
+The desired workflow is:
+
+1. Install OrayCSS or obtain its standalone CLI.
+2. Scan the project's source files.
+3. Extract recognized utility classes.
+4. Generate and optimize a CSS stylesheet.
+5. Include the stylesheet in the website.
+6. Deploy the compiled result without an OrayCSS runtime.
+
+The first release must implement this workflow before attempting an enormous utility catalog.
+
+---
+
+# 3. Zero-Dependency Policy
+
+Dependency freedom is one of the project's defining attributes.
+
+## Strict requirements
+
+- `dependencies` in the main `package.json` must be empty.
+- Do not require PostCSS, Lightning CSS, Autoprefixer, Tailwind, Sass, Less, Stylus, Babel, React, Vue, or another CSS or JavaScript framework.
+- Do not require a third-party glob library, filesystem watcher, command-line parser, CSS parser, color library, or utility library.
+- Do not require a CDN, API key, cloud service, account, network connection, or telemetry endpoint.
+- Use built-in Node.js functionality to compile CSS.
+- Use native browser CSS features in generated stylesheets.
+- Use Node.js built-in test facilities for automated testing.
+- Keep the browser runtime requirement at zero.
+
+Use appropriate native APIs, including:
+
+- `node:fs`
+- `node:path`
+- `node:url`
+- `node:crypto`
+- `node:process`
+- `node:readline`
+- `node:test`
+- `node:assert`
+- `node:util`
+- `node:perf_hooks`
+- Standard JavaScript collections and string-processing facilities
+
+Implement only the parsing complexity necessary for OrayCSS's documented syntax. Avoid writing a fake, incomplete general-purpose CSS parser and presenting it as standards-compliant.
+
+Development-only third-party dependencies should also be avoided unless a compelling, documented reason exists. If a future optional tool is recommended, it must not become a requirement for building the core framework.
+
+## Standalone means genuinely standalone
+
+After installation, OrayCSS should be usable through its CLI without requiring a project-specific JavaScript bundler.
+
+Example:
+
+```bash
+npm install --save-dev oraycss
+npx oraycss init
+npx oraycss build
+```
+
+Development mode:
+
+```bash
+npx oraycss watch
+```
+
+A production website should only need the generated CSS file and its own application assets.
+
+Also document how to run the tool directly from an installed package and how to use it in a project that has no React, Vue, Vite, or Webpack setup.
+
+If a self-contained executable for additional operating systems is practical, make it an optional distribution target. Do not falsely promise a universal native binary when the available build environment cannot produce and verify one.
+
+---
+
+# 4. Repository Architecture
+
+Build a maintainable compiler architecture with clear responsibility boundaries.
+
+Use this proposed structure as a starting point:
+
+```text
+oraycss/
+├── src/
+│   ├── cli/
+│   │   ├── index.js
+│   │   ├── arguments.js
+│   │   ├── commands/
+│   │   │   ├── init.js
+│   │   │   ├── build.js
+│   │   │   ├── watch.js
+│   │   │   ├── inspect.js
+│   │   │   └── help.js
+│   ├── compiler/
+│   │   ├── compile.js
+│   │   ├── candidates.js
+│   │   ├── extractor.js
+│   │   ├── parser.js
+│   │   ├── variants.js
+│   │   ├── generate.js
+│   │   ├── ordering.js
+│   │   ├── optimize.js
+│   │   └── diagnostics.js
+│   ├── utilities/
+│   │   ├── layout.js
+│   │   ├── flexbox.js
+│   │   ├── grid.js
+│   │   ├── spacing.js
+│   │   ├── sizing.js
+│   │   ├── typography.js
+│   │   ├── backgrounds.js
+│   │   ├── borders.js
+│   │   ├── effects.js
+│   │   ├── transforms.js
+│   │   ├── transitions.js
+│   │   ├── animation.js
+│   │   ├── accessibility.js
+│   │   └── index.js
+│   ├── theme/
+│   │   ├── defaults.js
+│   │   ├── tokens.js
+│   │   ├── config.js
+│   │   └── css-variables.js
+│   ├── content/
+│   │   ├── scan.js
+│   │   ├── patterns.js
+│   │   ├── watch.js
+│   │   └── extensions.js
+│   ├── css/
+│   │   ├── preflight.css
+│   │   ├── theme.css
+│   │   └── framework.css
+│   └── index.js
+├── templates/
+│   ├── minimal/
+│   ├── landing-page/
+│   └── dashboard/
+├── examples/
+│   ├── vanilla-html/
+│   ├── vanilla-js/
+│   ├── react/
+│   ├── vue/
+│   ├── svelte/
+│   ├── editorial/
+│   ├── dashboard/
+│   └── immersive-portfolio/
+├── tests/
+│   ├── unit/
+│   ├── compiler/
+│   ├── utilities/
+│   ├── variants/
+│   ├── integration/
+│   ├── accessibility/
+│   └── fixtures/
+├── docs/
+│   ├── getting-started.md
+│   ├── installation.md
+│   ├── cli.md
+│   ├── utilities.md
+│   ├── variants.md
+│   ├── theme.md
+│   ├── customization.md
+│   ├── accessibility.md
+│   ├── performance.md
+│   ├── architecture.md
+│   ├── browser-support.md
+│   └── limitations.md
+├── package.json
+├── README.md
+├── LICENSE
+├── CHANGELOG.md
+└── .gitignore
+```
+
+Adapt this architecture to the existing repository. Do not create unnecessary abstractions for trivial functions, but keep the compiler, utility registry, theme system, scanner, and CLI independently testable.
+
+---
+
+# 5. The Standalone CLI
+
+The CLI is the heart of OrayCSS.
+
+Create a reliable executable named `oraycss`.
+
+## Required commands
+
+### Initialize
+
+```bash
+oraycss init
+```
+
+Generate a minimal project configuration, recommended directory structure, input stylesheet if needed, and example build commands.
+
+Never overwrite existing project files without asking or offering a safe non-destructive mode.
+
+### Build
+
+```bash
+oraycss build
+```
+
+Compile detected utilities into a production stylesheet.
+
+Support useful options such as:
+
+```bash
+oraycss build \
+  --input ./src/oray.css \
+  --output ./public/oray.css \
+  --config ./oray.config.js
+```
+
+Also provide concise aliases if helpful, including `-i`, `-o`, and `-c`.
+
+### Watch
+
+```bash
+oraycss watch
+```
+
+Watch source files and automatically regenerate CSS when relevant files change.
+
+Use built-in file watching with debouncing, safe shutdown, and a fallback strategy if the operating system's file watcher misses events or cannot watch a directory recursively.
+
+Do not rely on operating-system-specific recursive watching unless it has been verified on the supported Node.js versions.
+
+### Inspect
+
+```bash
+oraycss inspect
+```
+
+Display useful information about:
+
+- Detected content files
+- Number of unique candidates
+- Recognized utility classes
+- Unsupported candidates
+- Safelisted candidates
+- Generated CSS size
+- Build duration
+- Configuration and theme issues
+
+Inspect mode must be able to analyze a project without changing source files.
+
+### Help and version
+
+```bash
+oraycss --help
+oraycss --version
+```
+
+All CLI commands must provide readable output, meaningful exit codes, actionable errors, and no accidental disclosure of environment secrets.
+
+---
+
+# 6. Content Scanning and Utility Extraction
+
+Implement an efficient content scanner without external libraries.
+
+Scan source files for possible OrayCSS class candidates. At minimum, support common file extensions:
+
+- `.html`
+- `.js`
+- `.jsx`
+- `.ts`
+- `.tsx`
+- `.mjs`
+- `.cjs`
+- `.vue`
+- `.svelte`
+- `.astro`
+- `.md`
+- `.mdx`
+- `.php`
+
+Allow custom extension and directory configuration.
+
+Example configuration:
+
+```js
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{html,js,jsx,ts,tsx,vue,svelte,astro}",
+    "./components/**/*.{html,js,jsx,ts,tsx}"
+  ],
+
+  output: "./public/oray.css",
+
+  theme: {
+    // Custom theme tokens
+  }
+};
+```
+
+This configuration is illustrative. Implement documented configuration semantics that can be parsed and tested without requiring a third-party library.
+
+The scanner must handle:
+
+- Nested directories
+- Ignored directories
+- Hidden files according to configuration
+- Exclusion patterns
+- Explicit file paths
+- Safelists
+- Dynamically constructed class-name limitations
+- Unicode and large files within configurable resource limits
+- Deterministic source discovery
+
+Do not assume that any random substring containing a hyphen is a valid utility.
+
+Build a candidate extraction layer and a separate utility resolver.
+
+## Dynamic class names
+
+Explain the limitations of static source scanning.
+
+For example:
+
+```js
+const className = `bg-${color}-600`;
+```
+
+The scanner cannot reliably infer every possible generated string from arbitrary program logic.
+
+Support safelists or explicit candidate registration:
+
+```js
+export default {
+  safelist: [
+    "bg-primary",
+    "bg-accent",
+    "text-foreground"
+  ]
+};
+```
+
+Do not solve dynamic classes by emitting the entire framework stylesheet for every project by default.
+
+## Deterministic scanning
+
+Given identical source files, configuration, and framework version, the compiler must produce deterministic output.
+
+Do not repeatedly regenerate output if nothing relevant changed. In watch mode, avoid infinite rebuild loops caused by writing the generated stylesheet into a scanned directory.
+
+---
+
+# 7. The Utility Compiler
+
+Implement a genuine compiler pipeline.
+
+Conceptual flow:
+
+```text
+Configuration
+     ↓
+Content discovery
+     ↓
+Candidate extraction
+     ↓
+Candidate normalization
+     ↓
+Utility and variant parsing
+     ↓
+Theme resolution
+     ↓
+CSS rule generation
+     ↓
+Rule deduplication and ordering
+     ↓
+Output optimization
+     ↓
+Compiled CSS
+```
+
+Keep candidate parsing independent from utility generation.
+
+The compiler must distinguish:
+
+- Known utilities
+- Known utility families with invalid values
+- Known variants
+- Unsupported variants
+- Arbitrary values
+- Explicitly safelisted classes
+- Custom registered utilities
+- Invalid or ambiguous candidates
+
+When a class is unsupported, offer a useful diagnostic in development mode. Do not output broken CSS silently.
+
+## Important compiler properties
+
+- Correct CSS selector escaping
+- Correct handling of special characters
+- Safe arbitrary-value parsing
+- Stable CSS ordering
+- Deduplication
+- Deterministic output
+- Repeatable build results
+- Source-size and candidate-count limits
+- Useful diagnostic messages
+- No execution of source-code expressions
+- No use of `eval()` or `new Function()` to interpret class names
+
+Only generate CSS for recognized utilities. Never allow a class name to inject raw declarations into a rule without controlled parsing and validation.
+
+---
+
+# 8. Utility Class Design
+
+OrayCSS should be familiar to utility-first CSS users without blindly copying every Tailwind detail or claiming undocumented compatibility.
+
+Define a coherent, consistent class naming system.
+
+The first release should cover the most useful categories.
+
+## 8.1 Layout and display
+
+Examples:
+
+```html
+<div class="block"></div>
+<div class="inline-block"></div>
+<div class="inline-flex"></div>
+<div class="flex"></div>
+<div class="grid"></div>
+<div class="hidden"></div>
+<div class="contents"></div>
+```
+
+Implement the core display utilities and document supported values.
+
+## 8.2 Flexbox
+
+Provide utilities for:
+
+- Direction
+- Wrapping
+- Alignment
+- Justification
+- Item alignment
+- Self alignment
+- Flex growth and shrinkage
+- Basis
+- Gap
+- Order
+
+Examples:
+
+```html
+<div class="flex items-center justify-between gap-4"></div>
+<div class="flex flex-col gap-6 md:flex-row"></div>
+<div class="flex flex-wrap items-center gap-3"></div>
+```
+
+## 8.3 CSS Grid
+
+Support:
+
+- Grid columns and rows
+- Column and row spans
+- Grid auto-flow
+- Auto sizing
+- Alignment
+- Gap
+- Responsive grid composition
+
+Examples:
+
+```html
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"></div>
+<div class="grid grid-cols-[auto_1fr_auto] items-center gap-4"></div>
+<div class="col-span-2"></div>
+```
+
+Define the supported syntax for arbitrary grid templates. Escape values correctly.
+
+## 8.4 Spacing
+
+Provide a predictable scale for:
+
+- Padding
+- Margin
+- Logical inline and block spacing
+- Gap
+- Space between children where useful
+- Negative spacing where safe and meaningful
+
+Examples:
+
+```html
+<div class="p-6 px-4 py-12"></div>
+<section class="mx-auto max-w-7xl px-6 py-20"></section>
+<div class="space-y-6"></div>
+```
+
+Prefer logical CSS properties where they improve internationalization and writing-direction support.
+
+Provide configurable spacing tokens.
+
+## 8.5 Sizing
+
+Support:
+
+- Width and height
+- Minimum and maximum dimensions
+- Full-size values
+- Viewport sizing
+- Common fractions
+- Intrinsic sizing
+- Aspect ratio
+- Arbitrary values within documented grammar
+
+Examples:
+
+```html
+<div class="w-full max-w-3xl"></div>
+<div class="min-h-screen"></div>
+<div class="aspect-video"></div>
+<div class="size-12"></div>
+```
+
+## 8.6 Position and layering
+
+Support:
+
+- Relative and absolute positioning
+- Fixed and sticky positioning
+- Inset utilities
+- Logical directional positioning
+- Z-index tokens
+- Overflow
+- Visibility
+- Object fit and object position
+
+Avoid arbitrary, unbounded defaults for properties that create security or usability problems. Any limitations must be documented.
+
+## 8.7 Typography
+
+Typography is one of OrayCSS's principal design advantages.
+
+Provide:
+
+- Font-family utilities
+- Font-size utilities
+- Font-weight utilities
+- Line-height utilities
+- Letter-spacing utilities
+- Text alignment
+- Text wrapping
+- Text overflow
+- Text decoration
+- Text transformation
+- Font style
+- Text balance and pretty wrapping where supported
+- Truncation
+- Responsive type sizes
+
+Examples:
+
+```html
+<h1 class="text-5xl font-semibold tracking-tight md:text-7xl">
+  Design with intention.
+</h1>
+
+<p class="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+  Every detail should earn its place.
+</p>
+```
+
+Create a cohesive typographic scale. Sensible font sizing, line length, and line-height should make high-quality typography achievable without requiring dozens of arbitrary values.
+
+Do not bundle external fonts. Use system font stacks and allow developers to configure local or self-hosted fonts.
+
+## 8.8 Colors and surfaces
+
+Support:
+
+- Text colors
+- Background colors
+- Border colors
+- Outline colors
+- Ring colors
+- Opacity where appropriate
+- Gradient utilities
+- Gradient stops
+- Background clipping and blend modes where practical
+
+Examples:
+
+```html
+<div class="bg-background text-foreground"></div>
+<div class="border border-border bg-surface"></div>
+<p class="text-muted-foreground"></p>
+<div class="bg-gradient-to-br from-primary to-accent"></div>
+```
+
+Provide design-token colors first, plus explicit arbitrary colors for deliberate custom styling.
+
+All generated colors must be valid CSS. Document fallbacks for modern color features and avoid silently producing invalid declarations.
+
+## 8.9 Borders and shapes
+
+Support:
+
+- Border width
+- Border style
+- Border colors
+- Per-side borders
+- Ring or outline styling
+- Border radius
+- Divide utilities where implemented
+- Logical border properties
+
+Examples:
+
+```html
+<div class="rounded-2xl border border-border"></div>
+<div class="rounded-full"></div>
+<div class="border-b border-border"></div>
+```
+
+Provide tasteful radius tokens rather than forcing a single radius style across every component.
+
+## 8.10 Shadows and depth
+
+Premium interfaces need controlled depth, not excessive blur or dozens of competing shadows.
+
+Support a restrained scale such as:
+
+- `shadow-none`
+- `shadow-sm`
+- `shadow`
+- `shadow-md`
+- `shadow-lg`
+- `shadow-xl`
+- `shadow-soft`
+- `shadow-glow`
+
+The custom shadow names are examples. Define their actual output and tokens.
+
+Provide ring and outline utilities for visible interactive states. Maintain legibility in both light and dark themes.
+
+## 8.11 Transforms and transitions
+
+Support useful transform utilities:
+
+- Translate
+- Scale
+- Rotate
+- Skew
+- Transform origin
+- Transition property
+- Transition duration
+- Transition timing function
+- Transition delay
+
+Examples:
+
+```html
+<a class="transition duration-200 hover:-translate-y-0.5 hover:shadow-soft">
+  Explore
+</a>
+```
+
+Support arbitrary values only through a validated grammar.
+
+Avoid heavy transitions on large, continuously changing surfaces. Prefer performant properties such as `transform` and `opacity` when appropriate.
+
+## 8.12 Additional useful categories
+
+Add support for the following when the core categories are stable:
+
+- Lists and markers
+- Tables
+- SVG fill and stroke
+- Filters and backdrop filters
+- Object and background positioning
+- Cursor and pointer behavior
+- Select behavior
+- User selection
+- Scroll behavior
+- Scroll margins and padding
+- Overscroll
+- Container sizing
+- Columns
+- Line clamping where reliably supportable
+- Form controls and appearance
+- Isolation and blending
+- Accessibility helpers
+- Print styles where justified
+
+The utility registry must be modular. Adding a new utility must not require rewriting the entire compiler.
+
+---
+
+# 9. Variants and Responsive Styling
+
+Variants allow utilities to be applied conditionally.
+
+Implement a useful initial variant system.
+
+## Responsive variants
+
+Provide configurable breakpoint variants such as:
+
+- `sm:`
+- `md:`
+- `lg:`
+- `xl:`
+- `2xl:`
+
+Example:
+
+```html
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4"></div>
+```
+
+Breakpoints must be configurable, ordered predictably, and applied without duplicating identical CSS rules.
+
+Document whether a breakpoint means a minimum width or another condition.
+
+## Interactive pseudo-class variants
+
+Implement useful variants such as:
+
+- `hover:`
+- `focus:`
+- `focus-visible:`
+- `active:`
+- `visited:`
+- `disabled:`
+- `checked:`
+- `first:`
+- `last:`
+- `odd:`
+- `even:`
+- `required:`
+- `invalid:`
+
+Only advertise variants that are implemented correctly.
+
+## Dark mode
+
+Support configurable dark-mode strategies, including a system-preference strategy and a class or data-attribute strategy.
+
+Example:
+
+```html
+<div class="bg-background text-foreground dark:bg-dark-background dark:text-dark-foreground"></div>
+```
+
+Do not hard-code the example token names unless the theme defines them.
+
+The dark-mode selector must be documented. Ensure generated selectors actually work with the chosen strategy.
+
+## Group and peer variants
+
+Implement useful parent-child interaction patterns after basic variants are stable.
+
+Example:
+
+```html
+<a class="group inline-flex items-center gap-2">
+  <span>Explore</span>
+  <span class="transition-transform group-hover:translate-x-1">
+    →
+  </span>
+</a>
+```
+
+Support common state propagation patterns only after selector parsing and CSS escaping are robust.
+
+## Motion and preference variants
+
+Support:
+
+- `motion-safe:`
+- `motion-reduce:`
+- `contrast-more:` if feasible
+- `print:` if feasible
+- Pointer or hover capability variants if implemented
+
+Users must not have to sacrifice accessibility to use expressive animations.
+
+## Variant composition
+
+Support composed variants with documented ordering rules, such as:
+
+```html
+<div class="md:hover:shadow-lg"></div>
+```
+
+Build a real parser that handles utility candidates with brackets, parentheses, quotes, and nested value syntax without incorrectly splitting every colon.
+
+Do not claim complete Tailwind variant compatibility unless it has been independently implemented and tested.
+
+---
+
+# 10. Arbitrary Values and Custom Utilities
+
+One of the defining advantages of utility-first CSS is its ability to represent one-off design requirements without forcing the developer to define a new global class.
+
+Support a controlled arbitrary-value grammar such as:
+
+```html
+<div class="w-[37rem]"></div>
+<div class="grid-cols-[auto_1fr_auto]"></div>
+<div class="top-[calc(100%+1rem)]"></div>
+<div class="bg-[#101014]"></div>
+<div class="text-[clamp(2rem,5vw,5rem)]"></div>
+```
+
+The above are illustrative. Confirm each form works in the actual parser and generated CSS.
+
+Requirements:
+
+- Parse bracket contents using balanced delimiters.
+- Preserve meaningful nested expressions.
+- Convert documented underscore conventions when needed.
+- Validate property values where a practical allowlist exists.
+- Escape the class selector correctly.
+- Avoid treating arbitrary strings as raw CSS declarations.
+- Reject malformed candidates with understandable errors.
+
+Implement an extensible utility registry and a custom utility mechanism.
+
+For example, a project should be able to define a custom utility or token through its supported configuration system without patching OrayCSS's source files.
+
+Custom utilities must participate in normal candidate extraction, ordering, variants, deduplication, and build output.
+
+Do not expose unsafe plugin execution or dynamically evaluate arbitrary strings from content files.
+
+---
+
+# 11. The Oray Design System
+
+OrayCSS needs its own design philosophy.
+
+The visual language should feel refined, futuristic, restrained, and functional—without locking developers into a single theme.
+
+Default design principles:
+
+- Purposeful whitespace
+- Strong, readable hierarchy
+- Consistent spacing scales
+- Restrained color palettes
+- Thoughtful typographic contrast
+- Smooth but subtle transitions
+- Intentional depth and borders
+- Cohesive light and dark themes
+- Accessible contrast
+- Responsive layouts that feel designed rather than merely rearranged
+- Clear visual emphasis for primary actions
+- Minimal clutter
+- Avoidance of gratuitous gradients, shadows, glassmorphism, or animation
+
+## 11.1 Theme tokens
+
+Implement configurable design tokens for:
+
+- Colors
+- Typography
+- Font weights
+- Spacing
+- Breakpoints
+- Border widths
+- Border radii
+- Shadows
+- Focus rings
+- Transition durations
+- Transition timing functions
+- Z-index layers
+- Container widths
+
+Expose semantic tokens such as:
+
+- `background`
+- `foreground`
+- `surface`
+- `surface-elevated`
+- `primary`
+- `primary-foreground`
+- `secondary`
+- `secondary-foreground`
+- `accent`
+- `accent-foreground`
+- `muted`
+- `muted-foreground`
+- `border`
+- `input`
+- `ring`
+- `success`
+- `warning`
+- `danger`
+
+These are examples of semantic roles, not fixed mandatory names for all projects.
+
+Use CSS custom properties in the output so themes can change without generating an entirely separate set of utilities.
+
+## 11.2 Theme configuration
+
+Establish a stable configuration format that does not require third-party tools.
+
+Example:
+
+```js
+export default {
+  content: ["./src/**/*.{html,js,jsx,ts,tsx,vue,svelte}"],
+
+  theme: {
+    colors: {
+      background: "#09090B",
+      foreground: "#FAFAFA",
+      surface: "#18181B",
+      primary: "#B8F36B",
+      accent: "#A78BFA",
+      border: "#303036",
+      muted: "#A1A1AA"
+    },
+
+    fontFamily: {
+      sans: "system-ui, sans-serif",
+      mono: "ui-monospace, monospace"
+    },
+
+    radius: {
+      lg: "0.75rem",
+      xl: "1rem",
+      "2xl": "1.5rem"
+    }
+  }
+};
+```
+
+Define how semantic colors, foreground contrast tokens, breakpoints, and default tokens interact. Validate configuration and reject invalid values with clear diagnostics.
+
+A JavaScript configuration file is executable code; load a trusted project configuration through standard module loading, and document that developers should not run unknown configurations without reviewing them.
+
+Consider an optional CSS-first theme syntax in a later phase, but do not implement a fragile partial parser for complex CSS solely to mimic another framework.
+
+## 11.3 Light and dark themes
+
+Ensure theme tokens work in both light and dark contexts.
+
+Provide a sensible default palette and clear customization instructions. Do not assume every website needs a dark theme, and do not force a global dark-mode toggle onto the consuming application.
+
+Preserve user choice, existing page styles, and system-preference behavior according to configuration.
+
+---
+
+# 12. Micro-Interactions and Animation
+
+OrayCSS should make elegant motion accessible through utilities rather than requiring JavaScript animation libraries.
+
+Implement carefully selected motion utilities and animation presets.
+
+Potential examples:
+
+- `transition`
+- `transition-colors`
+- `transition-opacity`
+- `transition-transform`
+- `duration-150`
+- `duration-200`
+- `duration-300`
+- `ease-out`
+- `ease-in-out`
+- `animate-spin`
+- `animate-pulse`
+- `animate-fade-in`
+- `animate-slide-up`
+- `animate-bounce-subtle`
+
+Define the actual animations and durations, and only expose implemented presets.
+
+Prioritize small, functional interactions: hover feedback, focus transitions, expand/collapse support, subtle entrance effects, and clear loading states.
+
+Do not add JavaScript to control CSS animations by default.
+
+## Reduced motion
+
+All essential functionality must remain understandable with reduced motion enabled.
+
+Provide motion-preference variants and sensible animation behavior. Avoid making important content invisible until a keyframe finishes.
+
+Do not animate everything. Motion should provide feedback, establish hierarchy, or help users understand state changes.
+
+---
+
+# 13. Preflight and Existing CSS Compatibility
+
+If OrayCSS provides a baseline reset, it must be optional or clearly documented and carefully scoped to its purpose.
+
+A developer should be able to integrate OrayCSS into an existing site without unexpected destructive global overrides.
+
+The baseline stylesheet may normalize reasonable defaults for:
+
+- Box sizing
+- Body margin
+- Form element inheritance
+- Media sizing
+- Typography inheritance
+- Focus visibility
+- Consistent default behaviors
+
+Do not globally remove meaningful accessibility indicators. Do not alter semantic elements unnecessarily.
+
+Provide configuration options to enable, disable, or customize preflight. Specify the output order of reset rules, theme variables, utilities, variants, and user-authored CSS.
+
+Existing CSS should continue to work. Do not globally force every element into a rigid component design.
+
+---
+
+# 14. CSS Output, Optimization, and Build Performance
+
+The generated stylesheet should be ordinary CSS that browsers can use without OrayCSS running.
+
+Implement:
+
+- Utility-only output generation
+- Stable rule ordering
+- Rule deduplication
+- Variant deduplication
+- Configurable preflight
+- Theme variable emission
+- Minified production output
+- Readable development output
+- Output-size reporting
+- Optional source map support only if it can be implemented correctly
+- CSS output validation tests
+
+## CSS ordering
+
+Define and document the order of generated rules.
+
+It should be stable across machines and builds. Do not rely on the order of classes in an HTML attribute to determine final cascade order.
+
+Where multiple utilities set the same CSS property, the compiler's documented ordering rules must make the result predictable.
+
+If the framework provides utility conflict diagnostics, do not misrepresent them as runtime class resolution.
+
+## Minification
+
+Provide a safe basic production optimizer without external dependencies.
+
+It may remove unnecessary whitespace and comments and apply other transformations only when their safety is well understood.
+
+Do not build a destructive regex-only CSS minifier that corrupts quoted content, URLs, function arguments, custom properties, or nested at-rules.
+
+If a transformation is unsafe to implement reliably, skip it rather than corrupting output.
+
+## Performance targets
+
+Establish measurable targets, but do not invent results.
+
+The engineering goal is:
+
+- Fast incremental scanning
+- Efficient candidate deduplication
+- Bounded memory use for large projects
+- No unnecessary filesystem reads
+- Minimal output when only a few utilities are used
+- Predictable compiler behavior
+- No browser-side JavaScript runtime cost
+
+Benchmark representative projects, report actual build duration and CSS size, and distinguish cold builds from incremental builds.
+
+---
+
+# 15. Custom CSS and Escape Hatches
+
+OrayCSS must not trap developers inside utility classes.
+
+Provide a simple, documented method for including ordinary authored CSS alongside generated utilities.
+
+For example, a project should be able to maintain:
+
+```css
+/* site.css */
+
+:root {
+  --site-brand: #a78bfa;
+}
+
+.article-content {
+  max-width: 72ch;
+  margin-inline: auto;
+}
+
+.article-content h2 {
+  letter-spacing: -0.025em;
+}
+```
+
+OrayCSS must not require users to rewrite all custom styles as utilities.
+
+If custom utility directives or an `@apply` feature are introduced, implement them through a small, explicit, documented syntax. Do not claim complete CSS nesting, PostCSS, or Tailwind directive compatibility unless those capabilities are actually supported.
+
+Keep utility compilation distinct from ordinary authored CSS processing.
+
+---
+
+# 16. Framework and Toolchain Integration
+
+The baseline experience must be framework-agnostic.
+
+Document integration paths for:
+
+- Plain HTML and CSS
+- Vanilla JavaScript
+- TypeScript
+- React
+- Vue
+- Svelte
+- Astro
+- Static-site generators
+- Existing Node.js backends
+- Any framework that can serve a compiled CSS file
+
+The standalone CLI must be sufficient for the common case.
+
+Do not force a framework plugin, Vite integration, Webpack loader, PostCSS plugin, or JavaScript runtime dependency for ordinary use.
+
+Optional integrations may be added later, but the standalone CLI must remain the reliable core.
+
+Provide integration examples that use real commands and valid project configurations. Avoid publishing framework adapters that simply wrap the CLI but add unnecessary dependencies.
+
+---
+
+# 17. Developer Experience
+
+The framework should feel immediately understandable to a new user.
+
+Create:
+
+- A memorable onboarding flow
+- A useful `init` command
+- Clear class naming
+- Actionable compiler errors
+- Readable development output
+- Concise production output
+- Theme configuration
+- Utility reference documentation
+- Interactive or static examples where practical
+- A searchable documentation interface if feasible
+- A migration guide for Tailwind-inspired workflows that clearly identifies similarities and differences
+
+The first interaction should be simple:
+
+```bash
+npm install --save-dev oraycss
+npx oraycss init
+npx oraycss build
+```
+
+A minimal HTML project must not need a complex bundler or a JavaScript component framework.
+
+The generated instructions must match the actual package configuration, executable name, and files.
+
+Verify package availability and potential naming conflicts before finalizing release instructions. Do not assume that the package name or CLI command is available until checked. Do not publish without explicit authorization.
+
+---
+
+# 18. Premium Showcase Projects
+
+Build complete examples that demonstrate how OrayCSS can create beautiful interfaces using actual utility classes.
+
+At minimum, include the following.
+
+## Example A — Minimal landing page
+
+Features:
+
+- Strong typographic hierarchy
+- Generous whitespace
+- Clear calls to action
+- Subtle hover effects
+- Responsive layout
+- Accessible contrast
+
+## Example B — Premium SaaS dashboard
+
+Features:
+
+- Navigation
+- Sidebar and main content layout
+- Metrics and charts represented with appropriate HTML/CSS where practical
+- Tables and lists
+- Empty and loading states
+- Light and dark theme examples
+- Clear interactive states
+
+## Example C — Immersive portfolio
+
+Features:
+
+- Editorial typography
+- Carefully controlled motion
+- Large visual hierarchy
+- Asymmetric or grid-based composition
+- Refined transitions
+- Responsive behavior
+- Reduced-motion support
+
+## Example D — Commerce product page
+
+Features:
+
+- Product information layout
+- Clear price and call to action
+- Variant or option presentation
+- Stock and error states
+- Mobile-ready layout
+- Keyboard-accessible controls
+
+Each example must compile through the real OrayCSS CLI. Do not hand-write the final generated CSS or make the demo depend on classes that the compiler does not support.
+
+Use original demo assets, CSS shapes, or optional user-supplied assets. Do not make remote image downloads or external fonts necessary to build or view the examples.
+
+---
+
+# 19. Accessibility and Browser Support
+
+Accessibility is a core feature, not an optional skin.
+
+Implement utilities and examples that encourage:
+
+- Visible keyboard focus
+- Sufficient text contrast
+- Semantic HTML
+- Responsive text sizing
+- Reduced motion
+- Usable pointer targets
+- Screen-reader-friendly forms
+- Meaningful interaction states
+- Color-independent state communication
+- Logical reading and layout order
+
+Support modern browsers using CSS capabilities that are appropriate for the documented support matrix.
+
+If a utility depends on a modern browser feature, either provide a reasonable fallback or document its compatibility requirements.
+
+Do not claim support for every browser merely because generated output is standard CSS.
+
+Create a browser support policy based on verified capabilities. Keep it current as the framework evolves.
+
+---
+
+# 20. Testing and Validation
+
+The compiler needs comprehensive automated tests before release.
+
+Use native Node.js test facilities without adding required dependencies.
+
+## 20.1 Compiler tests
+
+Verify:
+
+- Utility recognition
+- Candidate extraction
+- Arbitrary values
+- Escaped class names
+- Variant parsing
+- Nested bracket syntax
+- CSS selector escaping
+- Rule generation
+- Deterministic ordering
+- Deduplication
+- CSS variable generation
+- Configuration parsing
+- Invalid configuration handling
+- Unknown utility diagnostics
+- Safelist behavior
+- Correct empty-input behavior
+
+## 20.2 Utility tests
+
+For every documented class family, verify that valid candidates generate correct CSS declarations.
+
+Test representative properties rather than simply asserting that the generated string is nonempty.
+
+For example, a test for `flex` must verify the resulting `display: flex` declaration; a test for `md:grid-cols-3` must verify the correct media-query condition and grid column definition.
+
+## 20.3 Variant tests
+
+Test:
+
+- Responsive prefixes
+- Hover
+- Focus
+- Focus-visible
+- Active
+- Disabled
+- Dark mode
+- Group and peer variants where implemented
+- Reduced motion
+- Composed variants
+- Invalid variant ordering
+- Proper selector escaping
+
+## 20.4 Scanner tests
+
+Create temporary source fixtures to test:
+
+- Nested directory scanning
+- File exclusions
+- Ignored directories
+- Multiple extensions
+- Arbitrary brackets in classes
+- Duplicate candidates
+- Safelisted candidates
+- Dynamic class limitations
+- No accidental inclusion of generated output
+- Correct incremental rebuild behavior
+
+## 20.5 CLI integration tests
+
+Exercise the full workflow:
+
+1. Initialize a project.
+2. Confirm generated files are valid.
+3. Add HTML containing supported classes.
+4. Run the build.
+5. Inspect the generated stylesheet.
+6. Add another class.
+7. Run watch mode or rebuild.
+8. Verify the new class is generated.
+9. Remove an unused class.
+10. Verify stale CSS is removed from the newly generated stylesheet.
+11. Test invalid options and configuration.
+12. Confirm stable, useful exit codes.
+
+## 20.6 Output correctness tests
+
+Check that:
+
+- The stylesheet parses correctly for the supported output syntax.
+- CSS selectors match expected class names.
+- Arbitrary values remain valid.
+- Media queries and pseudo-class selectors are correct.
+- Custom properties are emitted in the proper order.
+- Reduced-motion rules are correct.
+- Repeated builds are deterministic.
+- Minification preserves behavior.
+- Existing custom CSS can coexist with generated CSS as documented.
+
+## 20.7 Performance tests
+
+Benchmark representative project fixtures with thousands of candidate classes.
+
+Measure:
+
+- Cold compilation
+- Incremental compilation
+- Source scanning duration
+- Generated file size
+- Memory use where practical
+- Deduplication effectiveness
+- Watch-mode rebuild duration
+
+Report the runtime, machine or environment where available, dataset size, and exact commands.
+
+Do not invent numbers or claim superiority over Tailwind without a reproducible, comparable benchmark.
+
+---
+
+# 21. Documentation and Package Quality
+
+Provide the following:
+
+- `README.md`
+- `LICENSE`
+- `CHANGELOG.md`
+- `.gitignore`
+- A valid `package.json`
+- A zero-dependency report
+- A `CONTRIBUTING.md` if feasible
+- Complete CLI reference
+- Utility class reference
+- Variant reference
+- Theme configuration guide
+- Arbitrary value guide
+- Accessibility guide
+- Browser support statement
+- Performance methodology
+- Architecture explanation
+- Troubleshooting
+- Migration guidance
+- Known limitations
+
+The `package.json` must include:
+
+- Correct package metadata
+- ESM configuration
+- Executable mapping for `oraycss`
+- Public entry points where appropriate
+- Type declarations if a typed public API is exposed
+- Correct file inclusion and publishing configuration
+- No unnecessary dependencies
+- Scripts that invoke real commands
+- A supported Node.js version range
+
+Use a permissive license only if its selection is appropriate and has been explicitly reviewed. Do not copy another framework's source code or proprietary assets.
+
+Verify the package archive contents locally before considering publication. Do not publish or deploy anything without explicit authorization.
+
+---
+
+# 22. Implementation Roadmap
+
+Build in the following order, ensuring every phase produces a runnable and testable result.
+
+## Phase 1 — Minimal working compiler
+
+Implement:
+
+- Package skeleton
+- CLI parser
+- Configuration loader
+- Source scanner
+- Candidate extraction
+- Basic utility registry
+- CSS generator
+- Output writer
+- Help and version commands
+
+**Completion test:** Compile a simple HTML file containing `flex`, `p-4`, and `text-center` into correct CSS with no external dependencies.
+
+## Phase 2 — Core utility catalog
+
+Implement the highest-value layout, spacing, sizing, typography, color, background, border, and display utilities.
+
+**Completion test:** The starter landing page can be styled entirely with supported OrayCSS utilities and ordinary authored CSS.
+
+## Phase 3 — Variants and responsive utilities
+
+Implement breakpoints, pseudo-class variants, dark mode, motion preferences, and arbitrary values.
+
+**Completion test:** Responsive and interaction states generate correct selectors, declarations, and at-rules with automated tests.
+
+## Phase 4 — Theme and design-token system
+
+Implement semantic tokens, configurable breakpoints, color themes, typography, shadows, spacing, and radii.
+
+**Completion test:** Switching theme configuration changes generated theme values without requiring a redesign of every utility class.
+
+## Phase 5 — Production compiler
+
+Implement optimized output, deterministic ordering, caching where appropriate, improved scanning, safe watch mode, diagnostics, and output-size reporting.
+
+**Completion test:** A representative project compiles repeatably, and watch mode updates correctly without infinite rebuilds.
+
+## Phase 6 — Motion, depth, and advanced utilities
+
+Implement transitions, transformations, tasteful animation presets, group/peer variants where reliable, and advanced layout utilities.
+
+**Completion test:** The showcase projects demonstrate the implemented advanced utilities while respecting reduced-motion preferences.
+
+## Phase 7 — Documentation and examples
+
+Complete the docs and all showcase projects. Run each example through the actual compiler.
+
+**Completion test:** A fresh user can install OrayCSS and build at least one complete example by following only the repository's documentation.
+
+## Phase 8 — Release preparation
+
+Run all tests, validate package exports, verify the dependency policy, inspect output artifacts, check documented commands, and prepare an accurate release checklist.
+
+**Completion test:** The package is ready for a reviewed release, with unimplemented features explicitly listed and no publication performed without authorization.
+
+---
+
+# 23. Definition of Done
+
+OrayCSS's initial stable release should meet these criteria or identify any outstanding item honestly.
+
+- [ ] The compiler works in Node.js.
+- [ ] There are no mandatory third-party runtime dependencies.
+- [ ] The primary package has no required external npm dependencies.
+- [ ] `oraycss init` creates a usable starter configuration.
+- [ ] `oraycss build` scans files and generates real CSS.
+- [ ] `oraycss watch` rebuilds reliably.
+- [ ] The framework generates only necessary recognized utilities.
+- [ ] Core utility categories are tested.
+- [ ] Responsive variants work.
+- [ ] Interaction variants work.
+- [ ] The theme system works.
+- [ ] Arbitrary values work for documented patterns.
+- [ ] CSS output ordering is deterministic.
+- [ ] Production minification preserves supported output behavior.
+- [ ] Reduced-motion preferences are supported.
+- [ ] The framework has no mandatory browser runtime.
+- [ ] Showcase projects compile through the real CLI.
+- [ ] Documentation matches actual implementation.
+- [ ] Tests have actually been run and results recorded.
+- [ ] Package contents have been validated.
+- [ ] No unsupported performance or compatibility claims are made.
+- [ ] Nothing has been published or deployed without authorization.
+
+---
+
+# 24. Final Instructions to the Coding Agent
+
+Start by inspecting the repository and the available execution environment. Identify the Node.js version and existing project structure. Verify the desired npm package name before finalizing release metadata.
+
+Then start implementing OrayCSS.
+
+Do not spend the entire task writing plans. Make a concise plan, build the smallest complete vertical slice, and expand it systematically.
+
+Do not create fake utility definitions, empty API methods, decorative-only demos, or tests that merely check whether a string exists. Ensure the CSS emitted by the compiler does what the utility claims.
+
+Do not add external dependencies without a compelling and explicitly documented reason. Do not use a third-party CSS framework to generate OrayCSS's core stylesheet. Do not use browser JavaScript to make an incomplete compilation pipeline appear functional.
+
+If time or environment limitations prevent the entire roadmap from being completed, prioritize:
+
+1. A reliable scanner.
+2. A real utility registry and CSS generator.
+3. Core layout, spacing, typography, and color utilities.
+4. Responsive and interactive variants.
+5. Theme tokens.
+6. The standalone CLI.
+7. Tests proving the generated CSS is correct.
+8. A polished example built using the actual framework.
+
+Finish with a factual handoff containing:
+
+- What was implemented
+- Architecture and important implementation decisions
+- Supported utility categories and variants
+- Exact installation and build commands
+- Exact test commands and their results
+- Example output CSS size where measured
+- Actual dependency count
+- Supported Node.js and browser requirements
+- Known limitations
+- Features that remain experimental or incomplete
+- Steps required before a stable release
+
+**The ultimate goal is to make OrayCSS a credible, dependency-free competitor to Tailwind CSS: a fast, expressive, extensible utility-first framework that produces elegant, accessible, production-ready CSS without imposing a browser runtime or a particular JavaScript framework.**
