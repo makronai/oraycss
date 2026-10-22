@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveUtility } from '../oraycss/src/index.js';
+import { resolveUtility } from '../src/index.js';
 
 test('layout utilities resolve correctly', () => {
   assert.equal(resolveUtility('block')?.css, 'display: block;');

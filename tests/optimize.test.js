@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { optimizeCSS } from '../oraycss/src/index.js';
+import { optimizeCSS } from '../src/index.js';
 
 test('optimizeCSS removes comments and whitespace', () => {
   const input = `

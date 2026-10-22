@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseArguments } from '../oraycss/src/cli/arguments.js';
+import { parseArguments } from '../src/cli/arguments.js';
 
 test('parseArguments parses command and flags', () => {
   const args = parseArguments(['build', '--input', 'src/app.css', '-o', 'public/bundle.css', '--minify']);

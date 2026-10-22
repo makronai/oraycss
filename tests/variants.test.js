@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compile } from '../oraycss/src/index.js';
+import { compile } from '../src/index.js';
 
 test('responsive variants generate media queries', () => {
   const result = compile('<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4"></div>', { preflight: false });

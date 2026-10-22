@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { expandBraces, matchesPattern } from '../oraycss/src/content/patterns.js';
+import { expandBraces, matchesPattern } from '../src/content/patterns.js';
 
 test('expandBraces expands brace patterns', () => {
   const expanded = expandBraces('./src/**/*.{html,js,ts}');

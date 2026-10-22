@@ -4,16 +4,722 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OrayCSS - Zero-Dependency Utility-First CSS Framework</title>
-    <meta name="description" content="A production-grade, zero-dependency utility-first CSS framework and ahead-of-time compiler competing with Tailwind CSS." />
+    <meta name="description" content="A production-grade, zero-dependency utility-first CSS framework and ready-to-use UI component suite competing with Tailwind CSS." />
     <meta property="og:title" content="OrayCSS - Zero-Dependency Utility-First CSS Framework" />
-    <meta property="og:description" content="A production-grade, zero-dependency utility-first CSS framework and ahead-of-time compiler competing with Tailwind CSS." />
+    <meta property="og:description" content="A production-grade, zero-dependency utility-first CSS framework and ready-to-use UI component suite competing with Tailwind CSS." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2309090b'/><path d='M30 50L45 35L70 60L55 75Z' fill='%23b8f36b'/><circle cx='65' cy='38' r='12' fill='%23a78bfa'/></svg>" />
+    <link rel="stylesheet" href="/dist/oray.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-background text-foreground min-h-screen antialiased">
+    <!-- Navigation Bar -->
+    <header class="border-b border-border bg-surface sticky top-0 z-50">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-3">
+          <div class="size-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-black text-lg">
+            O
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-lg tracking-tight">OrayCSS</span>
+              <span class="chip chip-primary">v1.0.0</span>
+            </div>
+            <p class="text-[11px] text-muted-foreground hidden sm:block">Zero-Dependency Utility & Component Engine</p>
+          </div>
+        </div>
+
+        <nav class="flex items-center gap-4 text-xs font-medium">
+          <a href="#quickstart" class="text-muted-foreground hover:text-foreground transition">Quickstart</a>
+          <a href="#components" class="text-muted-foreground hover:text-foreground transition">Components</a>
+          <a href="#compiler" class="text-muted-foreground hover:text-foreground transition">Live Compiler</a>
+          <span class="chip chip-accent">0 Dependencies</span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-6 py-12 space-y-16">
+      <!-- Hero Section -->
+      <section class="max-w-4xl space-y-6">
+        <div class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs text-muted-foreground">
+          <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+          <span>100% Native Node.js &bull; Zero External NPM Dependencies &bull; Pure AOT CSS</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+          Utility-First CSS &
+          <span class="text-primary block mt-1">Ready-to-Use UI Components.</span>
+        </h1>
+
+        <p class="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+          OrayCSS is engineered to compete directly with Tailwind CSS. No 30+ transitive packages, no runtime overhead in the browser, and no need to install external component libraries. Everything is built-in.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <code class="rounded-xl border border-border bg-surface px-4 py-2.5 font-mono text-sm text-primary select-all">
+            npm install -D oraycss
+          </code>
+          <a href="#components" class="btn btn-primary">
+            Explore Components &rarr;
+          </a>
+        </div>
+      </section>
+
+      <!-- Quickstart CLI Section -->
+      <section id="quickstart" class="panel panel-elevated">
+        <div class="panel-header">
+          <h2 class="panel-title text-base">Standalone CLI Commands</h2>
+          <span class="text-xs font-mono text-muted-foreground">bin/oraycss.js</span>
+        </div>
+        <div class="panel-body grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-2">
+            <span class="text-xs font-bold text-primary font-mono">1. Initialize</span>
+            <div class="font-mono text-xs bg-surface p-2.5 rounded-lg border border-border text-foreground">
+              npx oraycss init
+            </div>
+            <p class="text-xs text-muted-foreground">Generates <code class="text-foreground">oray.config.js</code> with smart defaults.</p>
+          </div>
+
+          <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-2">
+            <span class="text-xs font-bold text-primary font-mono">2. Build CSS</span>
+            <div class="font-mono text-xs bg-surface p-2.5 rounded-lg border border-border text-foreground">
+              npx oraycss build --minify
+            </div>
+            <p class="text-xs text-muted-foreground">Compiles pure CSS ahead-of-time in milliseconds.</p>
+          </div>
+
+          <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-2">
+            <span class="text-xs font-bold text-primary font-mono">3. Watch Mode</span>
+            <div class="font-mono text-xs bg-surface p-2.5 rounded-lg border border-border text-foreground">
+              npx oraycss watch
+            </div>
+            <p class="text-xs text-muted-foreground">Watches source files and recompiles automatically on save.</p>
+          </div>
+
+          <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-2">
+            <span class="text-xs font-bold text-primary font-mono">4. Inspect Tokens</span>
+            <div class="font-mono text-xs bg-surface p-2.5 rounded-lg border border-border text-foreground">
+              npx oraycss inspect
+            </div>
+            <p class="text-xs text-muted-foreground">Breaks down discovered candidates and rule diagnostics.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ready-to-Use UI Component Suite Section -->
+      <section id="components" class="space-y-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <h2 class="text-2xl font-bold tracking-tight">Ready-to-Use UI Component Suite</h2>
+            <span class="chip chip-primary">Built-In</span>
+          </div>
+          <p class="text-sm text-muted-foreground mt-1">
+            Production-ready UI primitives designed to eliminate dependencies on third-party UI libraries like DaisyUI or Flowbite.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- 1. Switches -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">1. Switches</h3>
+              <span class="text-xs font-mono text-muted-foreground">.switch</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex items-center gap-6 p-4 rounded-xl border border-border bg-surface-elevated">
+                <label class="flex items-center gap-3 cursor-pointer">
+                  <span class="switch">
+                    <input type="checkbox" class="switch-input" checked />
+                    <span class="switch-thumb"></span>
+                  </span>
+                  <span class="text-xs font-medium">Standard</span>
+                </label>
+
+                <label class="flex items-center gap-3 cursor-pointer">
+                  <span class="switch switch-sm">
+                    <input type="checkbox" class="switch-input" />
+                    <span class="switch-thumb"></span>
+                  </span>
+                  <span class="text-xs font-medium">Small</span>
+                </label>
+
+                <label class="flex items-center gap-3 cursor-pointer">
+                  <span class="switch switch-lg">
+                    <input type="checkbox" class="switch-input" checked />
+                    <span class="switch-thumb"></span>
+                  </span>
+                  <span class="text-xs font-medium">Large</span>
+                </label>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;label class="switch"&gt;
+  &lt;input type="checkbox" class="switch-input" checked /&gt;
+  &lt;span class="switch-thumb"&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 2. Tabs -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">2. Tabs</h3>
+              <span class="text-xs font-mono text-muted-foreground">.tabs, .tab-pill</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-4">
+                <nav class="tabs">
+                  <button class="tab tab-active" onclick="switchTab(this)">Overview</button>
+                  <button class="tab" onclick="switchTab(this)">Config</button>
+                  <button class="tab" onclick="switchTab(this)">Security</button>
+                </nav>
+
+                <div class="tabs-pills">
+                  <button class="tab-pill tab-pill-active" onclick="switchPill(this)">Monthly</button>
+                  <button class="tab-pill" onclick="switchPill(this)">Annual (-20%)</button>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;nav class="tabs"&gt;
+  &lt;button class="tab tab-active"&gt;Overview&lt;/button&gt;
+  &lt;button class="tab"&gt;Config&lt;/button&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 3. Accordions -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">3. Accordions</h3>
+              <span class="text-xs font-mono text-muted-foreground">.accordion</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="accordion">
+                <details class="accordion-item" open>
+                  <summary class="accordion-trigger">
+                    <span>How does zero-dependency AOT compilation work?</span>
+                  </summary>
+                  <div class="accordion-content">
+                    OrayCSS parses tokens using balanced bracket grammar directly in Node.js standard modules without PostCSS or Babel, compiling in single-digit milliseconds.
+                  </div>
+                </details>
+                <details class="accordion-item">
+                  <summary class="accordion-trigger">
+                    <span>Can I customize the design tokens?</span>
+                  </summary>
+                  <div class="accordion-content">
+                    Yes. Configure custom semantic roles and palette mappings inside <code class="text-primary">oray.config.js</code>.
+                  </div>
+                </details>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="accordion"&gt;
+  &lt;details class="accordion-item" open&gt;
+    &lt;summary class="accordion-trigger"&gt;Question?&lt;/summary&gt;
+    &lt;div class="accordion-content"&gt;Answer.&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 4. Drop-Down & Drop-Up Menus -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">4. Drop-Down & Drop-Up Menus</h3>
+              <span class="text-xs font-mono text-muted-foreground">.dropdown, .dropup</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex items-center gap-6 p-4 rounded-xl border border-border bg-surface-elevated">
+                <!-- Dropdown -->
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-trigger">
+                    <span>Actions</span>
+                    <span class="text-[10px]">&dtrif;</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-header">Manage</div>
+                    <a href="javascript:void(0)" class="dropdown-item">Export Stylesheet</a>
+                    <a href="javascript:void(0)" class="dropdown-item">Inspect AST</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger">Reset Theme</a>
+                  </div>
+                </div>
+
+                <!-- Dropup -->
+                <div class="dropup">
+                  <button class="btn btn-secondary">
+                    <span>Bottom Toolbar</span>
+                    <span class="text-[10px]">&utrif;</span>
+                  </button>
+                  <div class="dropup-menu">
+                    <a href="javascript:void(0)" class="dropup-item">View Documentation</a>
+                    <a href="javascript:void(0)" class="dropup-item">Release Notes</a>
+                  </div>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="dropdown"&gt;
+  &lt;button class="btn btn-secondary"&gt;Menu&lt;/button&gt;
+  &lt;div class="dropdown-menu"&gt;
+    &lt;a class="dropdown-item"&gt;Action&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 5. Breadcrumbs -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">5. Breadcrumbs</h3>
+              <span class="text-xs font-mono text-muted-foreground">.breadcrumbs</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="p-4 rounded-xl border border-border bg-surface-elevated">
+                <nav aria-label="Breadcrumb">
+                  <ol class="breadcrumbs">
+                    <li class="breadcrumb-item">
+                      <a href="#" class="breadcrumb-link">Root</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="#" class="breadcrumb-link">Packages</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="#" class="breadcrumb-link">OrayCSS</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <span class="breadcrumb-active">Components</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;ol class="breadcrumbs"&gt;
+  &lt;li class="breadcrumb-item"&gt;&lt;a class="breadcrumb-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="breadcrumb-item"&gt;&lt;span class="breadcrumb-active"&gt;Docs&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 6. Checkboxes -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">6. Checkboxes</h3>
+              <span class="text-xs font-mono text-muted-foreground">.checkbox</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="checkbox-group p-4 rounded-xl border border-border bg-surface-elevated">
+                <label class="checkbox-label">
+                  <input type="checkbox" class="checkbox" checked />
+                  <span>AOT Compiler enabled (checked)</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="checkbox" checked />
+                  <span>Balanced bracket parser</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" class="checkbox" />
+                  <span>Legacy PostCSS fallback (disabled)</span>
+                </label>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;label class="checkbox-label"&gt;
+  &lt;input type="checkbox" class="checkbox" checked /&gt;
+  &lt;span&gt;Enable feature&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 7. Forms -->
+          <div class="panel lg:col-span-2">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">7. Forms & Field Controls</h3>
+              <span class="text-xs font-mono text-muted-foreground">.form-input, .form-select, .form-textarea</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl border border-border bg-surface-elevated">
+                <div class="form-group">
+                  <label class="form-label">Framework Identifier</label>
+                  <input type="text" class="form-input" value="oraycss" />
+                  <span class="form-hint">Unique npm package identifier</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Target Architecture</label>
+                  <select class="form-select">
+                    <option>Node.js 22 Standalone CLI</option>
+                    <option>Programmatic Node.js ESM API</option>
+                    <option>Continuous File Watcher</option>
+                  </select>
+                  <span class="form-hint">Compilation runtime environment</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Invalid Token (Validation Error State)</label>
+                  <input type="text" class="form-input form-input-error" value="unbalanced-[bracket" />
+                  <span class="form-error">&cross; Unbalanced arbitrary value delimiter</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Custom Input CSS Directives</label>
+                  <textarea class="form-textarea" placeholder="@oray preflight;\n@oray theme;\n@oray components;\n@oray utilities;"></textarea>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="form-group"&gt;
+  &lt;label class="form-label"&gt;Email&lt;/label&gt;
+  &lt;input type="email" class="form-input" /&gt;
+  &lt;span class="form-hint"&gt;Help text&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 8. Tooltips -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">8. Directional Tooltips</h3>
+              <span class="text-xs font-mono text-muted-foreground">.tooltip-top, .tooltip-bottom</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex flex-wrap items-center justify-around gap-4 p-8 rounded-xl border border-border bg-surface-elevated">
+                <div class="tooltip tooltip-top">
+                  <button class="btn btn-outline btn-sm">Hover Top</button>
+                  <span class="tooltip-content">Top Tooltip bubble</span>
+                </div>
+
+                <div class="tooltip tooltip-bottom">
+                  <button class="btn btn-outline btn-sm">Hover Bottom</button>
+                  <span class="tooltip-content">Bottom Tooltip bubble</span>
+                </div>
+
+                <div class="tooltip tooltip-left">
+                  <button class="btn btn-outline btn-sm">Hover Left</button>
+                  <span class="tooltip-content">Left Tooltip bubble</span>
+                </div>
+
+                <div class="tooltip tooltip-right">
+                  <button class="btn btn-outline btn-sm">Hover Right</button>
+                  <span class="tooltip-content">Right Tooltip bubble</span>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="tooltip tooltip-top"&gt;
+  &lt;button class="btn"&gt;Hover Me&lt;/button&gt;
+  &lt;span class="tooltip-content"&gt;Helpful message&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 9. Notifications / Alerts -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">9. Notifications & Alerts</h3>
+              <span class="text-xs font-mono text-muted-foreground">.notification</span>
+            </div>
+            <div class="panel-body space-y-3">
+              <div class="notification notification-success">
+                <span class="notification-icon font-bold text-success">&check;</span>
+                <div class="grow">
+                  <strong class="notification-title">AOT Build Succeeded</strong>
+                  <p class="notification-desc">Generated 100% pure CSS in 3.4ms with zero warnings.</p>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+              </div>
+
+              <div class="notification notification-info">
+                <span class="notification-icon font-bold text-accent">&bull;</span>
+                <div class="grow">
+                  <strong class="notification-title">Zero Runtime Overhead</strong>
+                  <p class="notification-desc">Browser loads zero JavaScript runtime.</p>
+                </div>
+              </div>
+
+              <div class="notification notification-warning">
+                <div class="grow">
+                  <strong class="notification-title">Notice</strong>
+                  <p class="notification-desc">Arbitrary values should use valid balanced brackets.</p>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="notification notification-success"&gt;
+  &lt;strong class="notification-title"&gt;Success&lt;/strong&gt;
+  &lt;p class="notification-desc"&gt;Message text&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 10. Toast Notifications -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">10. Toast Notifications</h3>
+              <span class="text-xs font-mono text-muted-foreground">.toast</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="p-4 rounded-xl border border-border bg-surface-elevated space-y-3">
+                <div class="toast">
+                  <span class="size-2 rounded-full bg-success mt-1"></span>
+                  <div class="grow">
+                    <div class="text-xs font-semibold">Compiler Ready</div>
+                    <div class="text-[11px] text-muted-foreground">Standalone CLI registered to PATH</div>
+                  </div>
+                  <span class="chip chip-primary text-[10px]">Just now</span>
+                </div>
+
+                <div class="toast">
+                  <span class="size-2 rounded-full bg-accent mt-1"></span>
+                  <div class="grow">
+                    <div class="text-xs font-semibold">Zero Dependencies</div>
+                    <div class="text-[11px] text-muted-foreground">npm tree verified with 0 packages</div>
+                  </div>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="toast-container toast-top-right"&gt;
+  &lt;div class="toast"&gt;
+    &lt;span&gt;Saved&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 11. Toggles & Group Toggles -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">11. Toggles & Group Toggles</h3>
+              <span class="text-xs font-mono text-muted-foreground">.toggle, .toggle-group</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex flex-wrap items-center gap-4 p-4 rounded-xl border border-border bg-surface-elevated">
+                <button class="toggle toggle-active" onclick="toggleActive(this)">Active State</button>
+                <button class="toggle" onclick="toggleActive(this)">Inactive State</button>
+
+                <div class="toggle-group">
+                  <button class="toggle-group-item toggle-group-item-active" onclick="switchGroupToggle(this)">All</button>
+                  <button class="toggle-group-item" onclick="switchGroupToggle(this)">Utilities</button>
+                  <button class="toggle-group-item" onclick="switchGroupToggle(this)">Components</button>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="toggle-group"&gt;
+  &lt;button class="toggle-group-item toggle-group-item-active"&gt;Option A&lt;/button&gt;
+  &lt;button class="toggle-group-item"&gt;Option B&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 12. Chips & Badges -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">12. Chips & Tags</h3>
+              <span class="text-xs font-mono text-muted-foreground">.chip</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex flex-wrap items-center gap-2 p-4 rounded-xl border border-border bg-surface-elevated">
+                <span class="chip chip-primary">Primary Tag</span>
+                <span class="chip chip-accent">Accent Role</span>
+                <span class="chip chip-success">Passing 100%</span>
+                <span class="chip chip-warning">Warning</span>
+                <span class="chip chip-danger">Error</span>
+                <span class="chip chip-outline">Outline</span>
+                <span class="chip chip-primary">
+                  <span>Dismissible</span>
+                  <button class="chip-dismiss" onclick="this.parentElement.remove()">&times;</button>
+                </span>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;span class="chip chip-primary"&gt;Tag Name&lt;/span&gt;
+&lt;span class="chip chip-primary"&gt;
+  &lt;span&gt;Filter&lt;/span&gt;
+  &lt;button class="chip-dismiss"&gt;&amp;times;&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 13. Panels & Cards -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">13. Panels & Cards</h3>
+              <span class="text-xs font-mono text-muted-foreground">.panel</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="panel panel-elevated">
+                <div class="panel-header">
+                  <h4 class="panel-title text-xs">Panel Card Example</h4>
+                  <span class="chip chip-primary text-[10px]">Active</span>
+                </div>
+                <div class="panel-body py-3">
+                  <p class="text-xs text-muted-foreground">
+                    Modular container with standardized border radius, header, body, and elevated footer bar.
+                  </p>
+                </div>
+                <div class="panel-footer py-2">
+                  <button class="btn btn-secondary btn-sm">Cancel</button>
+                  <button class="btn btn-primary btn-sm">Confirm</button>
+                </div>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;div class="panel panel-elevated"&gt;
+  &lt;div class="panel-header"&gt;&lt;h4 class="panel-title"&gt;Title&lt;/h4&gt;&lt;/div&gt;
+  &lt;div class="panel-body"&gt;Content&lt;/div&gt;
+  &lt;div class="panel-footer"&gt;&lt;button class="btn"&gt;Action&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- 14. Buttons & Modal Trigger -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title text-sm">14. Buttons & Modal</h3>
+              <span class="text-xs font-mono text-muted-foreground">.btn, .modal</span>
+            </div>
+            <div class="panel-body space-y-4">
+              <div class="flex flex-wrap items-center gap-3 p-4 rounded-xl border border-border bg-surface-elevated">
+                <button class="btn btn-primary" onclick="openModal()">Open Modal &rarr;</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <button class="btn btn-outline">Outline</button>
+                <button class="btn btn-sm btn-primary">Small</button>
+              </div>
+
+              <pre class="bg-surface p-3 rounded-lg border border-border text-[11px] font-mono text-muted-foreground overflow-x-auto"><code>&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;div class="modal is-open"&gt;
+  &lt;div class="modal-box"&gt;Modal content&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Compiler & Token Tester -->
+      <section id="compiler" class="panel panel-elevated">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title text-base">In-Browser Live OrayCSS Compiler & Tester</h2>
+            <p class="text-xs text-muted-foreground">Type any OrayCSS utilities or arbitrary expressions below to compile live ahead-of-time CSS.</p>
+          </div>
+          <span class="chip chip-success font-mono text-[11px]">Live Node API</span>
+        </div>
+        <div class="panel-body grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="form-label text-xs">HTML Markup / Utility Classes</label>
+            <textarea id="liveInput" class="form-textarea font-mono text-xs" style="height: 180px;"><div class="switch switch-checked"></div>
+<button class="tab tab-active">Overview</button>
+<div class="w-[37rem] bg-[#121215] text-[#b8f36b] p-6 rounded-2xl shadow-glow">
+  <span class="top-[calc(100%+1rem)] font-bold">Arbitrary precision</span>
+</div></textarea>
+            <div class="flex items-center justify-between text-xs text-muted-foreground">
+              <span>Supports arbitrary bracket values like <code class="text-primary font-mono">w-[37rem]</code></span>
+              <button class="btn btn-primary btn-sm" onclick="compileLive()">Recompile Now</button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="form-label text-xs">Compiled Pure CSS Output</label>
+              <span id="compileStats" class="text-[11px] font-mono text-primary">Compiled in 0.8ms</span>
+            </div>
+            <textarea id="liveOutput" class="form-textarea font-mono text-xs text-primary" style="height: 180px; background-color: #09090b;" readonly>/* Generating stylesheet... */</textarea>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Dialog Component Demo -->
+    <div id="demoModal" class="modal">
+      <div class="modal-box space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold">OrayCSS Modal Component</h3>
+          <button class="chip-dismiss text-lg font-bold" onclick="closeModal()">&times;</button>
+        </div>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          This accessible modal dialog is styled entirely using OrayCSS's built-in <code class="text-primary">.modal</code> and <code class="text-primary">.modal-box</code> primitives with zero external libraries.
+        </p>
+        <div class="p-3 rounded-lg border border-border bg-surface-elevated text-xs font-mono text-muted-foreground">
+          Class: <span class="text-primary">.modal.is-open</span> &bull; Backdrop blur: 4px
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button class="btn btn-secondary btn-sm" onclick="closeModal()">Dismiss</button>
+          <button class="btn btn-primary btn-sm" onclick="closeModal()">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Footer -->
+    <footer class="border-t border-border bg-surface px-6 py-6 text-xs text-muted-foreground mt-20">
+      <div class="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1.5 text-success font-medium">
+            <span class="size-2 rounded-full bg-success"></span>
+            <span>Compiler Ready</span>
+          </span>
+          <span>&bull;</span>
+          <span>OrayCSS v1.0.0</span>
+          <span>&bull;</span>
+          <span class="text-primary font-mono">0 NPM Dependencies</span>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs">
+          <span>Ahead-of-Time Compiler</span>
+          <span>&bull;</span>
+          <span>Node.js v18+ / v22+</span>
+          <span>&bull;</span>
+          <span>Pure CSS Output</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Interactive Scripts for Component Demos -->
+    <script>
+      function switchTab(btn) {
+        btn.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
+        btn.classList.add('tab-active');
+      }
+
+      function switchPill(btn) {
+        btn.parentElement.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('tab-pill-active'));
+        btn.classList.add('tab-pill-active');
+      }
+
+      function toggleActive(btn) {
+        btn.classList.toggle('toggle-active');
+      }
+
+      function switchGroupToggle(btn) {
+        btn.parentElement.querySelectorAll('.toggle-group-item').forEach(t => t.classList.remove('toggle-group-item-active'));
+        btn.classList.add('toggle-group-item-active');
+      }
+
+      function openModal() {
+        document.getElementById('demoModal').classList.add('is-open');
+      }
+
+      function closeModal() {
+        document.getElementById('demoModal').classList.remove('is-open');
+      }
+
+      // Live compiler client
+      async function compileLive() {
+        const input = document.getElementById('liveInput').value;
+        const output = document.getElementById('liveOutput');
+        const stats = document.getElementById('compileStats');
+
+        try {
+          const res = await fetch('/api/compile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: input, options: { preflight: false } })
+          });
+          const data = await res.json();
+          if (data.css) {
+            output.value = data.css;
+            stats.textContent = `${data.stats.rulesCount} rules in ${data.stats.durationMs}ms (${data.stats.bytes}B)`;
+          } else if (data.error) {
+            output.value = '/* Error: ' + data.error + ' */';
+          }
+        } catch (e) {
+          output.value = '/* Error connecting to compiler: ' + e.message + ' */';
+        }
+      }
+
+      // Initial compile
+      compileLive();
+    </script>
   </body>
 </html>
-

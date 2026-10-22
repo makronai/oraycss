@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compile, extractCandidates, parseCandidate, escapeClassName } from '../oraycss/src/index.js';
+import { compile, extractCandidates, parseCandidate, escapeClassName } from '../src/index.js';
 
 test('extractCandidates extracts classes from HTML markup', () => {
   const html = `

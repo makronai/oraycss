@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compile } from '../oraycss/src/index.js';
+import { compile } from '../src/index.js';
 
 test('arbitrary width w-[37rem]', () => {
   const result = compile('<div class="w-[37rem]"></div>', { preflight: false });
